@@ -87,7 +87,7 @@
       .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     }
 
-    .intro { text-align: center; padding: 5rem 1rem 3rem; }
+    .intro { text-align: center; padding: 6rem 1rem 3rem; } /* Increased top padding to avoid overlap */
     .eyebrow { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
 
     /* TOP VIDEO ROW */
@@ -200,13 +200,13 @@
     .prev-arrow { left: 1rem; }
     .next-arrow { right: 1rem; }
 
-    /* ⚠️ FLOATING BUTTONS */
+    /* ⚠️ FLOATING BUTTONS (Adjusted Alignments) */
     
     /* Top Left (Blinking Follow Me) */
     .fb-top-left {
       position: fixed;
-      top: 90px; /* Below the header */
-      left: 20px;
+      top: 110px; /* Moved down to clear the header perfectly */
+      left: 30px; /* Moved right for better spacing */
       background: #1877F2;
       color: white !important;
       display: flex; align-items: center; gap: 8px;
@@ -229,7 +229,7 @@
     /* Bottom Right (Chat Only) */
     .floating-container {
       position: fixed;
-      bottom: 30px;
+      bottom: 40px; /* Raised up slightly to prevent touching the very bottom edge */
       right: 30px;
       display: flex;
       flex-direction: column;
@@ -260,8 +260,8 @@
 
     /* Mobile Adjustments for floating buttons */
     @media (max-width: 768px) {
-      .fb-top-left { top: 80px; left: 15px; padding: 8px 12px; font-size: 0.75rem; }
-      .floating-container { bottom: 20px; right: 15px; }
+      .fb-top-left { top: 95px; left: 20px; padding: 8px 12px; font-size: 0.75rem; }
+      .floating-container { bottom: 25px; right: 20px; }
       .chat-btn { padding: 10px 15px; font-size: 0.8rem; }
     }
   </style>
