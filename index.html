@@ -87,10 +87,10 @@
       .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     }
 
-    .intro { text-align: center; padding: 6rem 1rem 3rem; } /* Increased top padding to avoid overlap */
+    .intro { text-align: center; padding: 6rem 1rem 3rem; }
     .eyebrow { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
 
-    /* TOP VIDEO ROW */
+    /* TOP VIDEO ROW (Responsive Grid) */
     .video-grid { 
       display: grid; 
       grid-template-columns: repeat(3, 1fr); 
@@ -99,7 +99,10 @@
       padding-bottom: 2rem;
       border-bottom: 1px solid rgba(232, 221, 210, 0.5);
     }
-    @media (max-width: 900px) { .video-grid { grid-template-columns: 1fr; } }
+    /* Tablet: 2 columns */
+    @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
+    /* Mobile: 1 column */
+    @media (max-width: 600px) { .video-grid { grid-template-columns: 1fr; } }
     
     .video-item { 
       border-radius: 8px; 
@@ -180,8 +183,8 @@
     .btn { padding: 1rem 2rem; background: var(--charcoal); color: var(--ivory); border: none; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 8px; transition: 0.3s; font-weight: 500; }
     .btn:hover { background: var(--gold); color: var(--charcoal); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(184, 151, 90, 0.3); }
     
-    /* FOOTER */
-    footer { border-top: 1px solid rgba(232, 221, 210, 0.5); padding: 3rem 0; text-align: center; background: rgba(245, 237, 228, 0.5); backdrop-filter: blur(10px); margin-top: auto; }
+    /* FOOTER (Added bottom padding to prevent Chat button overlap) */
+    footer { border-top: 1px solid rgba(232, 221, 210, 0.5); padding: 3rem 0 100px 0; text-align: center; background: rgba(245, 237, 228, 0.5); backdrop-filter: blur(10px); margin-top: auto; }
     .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; }
     .social-links a { color: var(--charcoal); transition: color 0.3s, transform 0.3s; display: inline-block; }
     .social-links a:hover { color: var(--gold); transform: translateY(-5px) scale(1.1); }
@@ -200,13 +203,13 @@
     .prev-arrow { left: 1rem; }
     .next-arrow { right: 1rem; }
 
-    /* ⚠️ FLOATING BUTTONS (Adjusted Alignments) */
+    /* ⚠️ FLOATING BUTTONS (Perfectly Aligned) */
     
     /* Top Left (Blinking Follow Me) */
     .fb-top-left {
       position: fixed;
-      top: 110px; /* Moved down to clear the header perfectly */
-      left: 30px; /* Moved right for better spacing */
+      top: 110px; /* Clears the header */
+      left: 30px; 
       background: #1877F2;
       color: white !important;
       display: flex; align-items: center; gap: 8px;
@@ -229,7 +232,7 @@
     /* Bottom Right (Chat Only) */
     .floating-container {
       position: fixed;
-      bottom: 40px; /* Raised up slightly to prevent touching the very bottom edge */
+      bottom: 40px; /* Raised to avoid edge */
       right: 30px;
       display: flex;
       flex-direction: column;
@@ -260,9 +263,11 @@
 
     /* Mobile Adjustments for floating buttons */
     @media (max-width: 768px) {
-      .fb-top-left { top: 95px; left: 20px; padding: 8px 12px; font-size: 0.75rem; }
+      .fb-top-left { top: 85px; left: 20px; padding: 8px 12px; font-size: 0.75rem; }
       .floating-container { bottom: 25px; right: 20px; }
       .chat-btn { padding: 10px 15px; font-size: 0.8rem; }
+      .close-lightbox { top: 1rem; right: 1rem; font-size: 2.5rem; }
+      .prev-arrow, .next-arrow { font-size: 2rem; padding: 0.5rem; }
     }
   </style>
 </head>
@@ -279,13 +284,13 @@
     </div>
   </header>
 
-  <!-- ⚠️ TOP LEFT BLINKING FOLLOW BUTTON -->
+  <!-- TOP LEFT BLINKING FOLLOW BUTTON -->
   <a href="https://www.facebook.com/awsmee16/" target="_blank" class="fb-top-left">
     <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
     Follow Me
   </a>
 
-  <!-- ⚠️ BOTTOM RIGHT FLOATING BUTTON (Chat Only) -->
+  <!-- BOTTOM RIGHT FLOATING BUTTON (Chat Only) -->
   <div class="floating-container">
     <a href="https://m.me/awsmee16" target="_blank" class="chat-btn">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.14.26.35.27.57l.05 1.78c.01.57.61.94 1.13.7l1.98-.88c.16-.07.35-.09.52-.04 1.02.28 2.11.43 3.23.43 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm3.28 12.17c-.2.2-.52.2-.72 0l-2.1-2.1c-.2-.2-.2-.52 0-.72l2.1-2.1c.2-.2.52-.2.72 0l2.1 2.1c.2.2.2.52 0 .72l-2.1 2.1zm-5.62 0c-.2.2-.52.2-.72 0l-2.1-2.1c-.2-.2-.2-.52 0-.72l2.1-2.1c.2-.2.52-.2.72 0l2.1 2.1c.2.2.2.52 0 .72l-2.1 2.1z"/></svg>
@@ -463,6 +468,9 @@
       const contentDiv = document.getElementById('lightbox-content');
       const item = allMediaData[index];
       
+      // Clear previous content completely to kill old audio/video
+      contentDiv.innerHTML = '';
+
       if (item.type === 'video') {
         contentDiv.innerHTML = `<video src="${item.src}" controls autoplay playsinline style="animation: none;" onerror="this.onerror=null; this.src='${item.fallback}';"></video>`;
       } else {
