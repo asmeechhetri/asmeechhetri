@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asmee</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root { --ivory: #FDF8F3; --charcoal: #2D2A26; --gold: #B8975A; --cream: #F5EDE4; --border: #E8DDD2; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--charcoal); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
+    a { color: var(--charcoal); text-decoration: none; cursor: pointer; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+    
+    /* HEADER */
+    header { border-bottom: 1px solid var(--border); background: rgba(253, 248, 243, 0.95); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; }
+    nav { display: flex; gap: 2rem; }
+    nav a { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: #4A4540; }
+    nav a:hover, nav a.active { color: var(--charcoal); border-bottom: 1px solid var(--gold); }
+    
+    /* HAMBURGER */
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 101; }
+    .hamburger span { display: block; width: 25px; height: 2px; background: var(--charcoal); transition: 0.3s; }
+    @media (max-width: 768px) {
+      nav { position: fixed; top: 0; right: -100%; height: 100vh; width: 250px; background: var(--ivory); flex-direction: column; padding: 6rem 2rem; transition: 0.4s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.05); }
+      nav.active { right: 0; }
+      .hamburger { display: flex; }
+      .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger.active span:nth-child(2) { opacity: 0; }
+      .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    }
+
+    /* GALLERY */
+    .intro { text-align: center; padding: 5rem 1rem 3rem; }
+    .eyebrow { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .gallery { column-count: 3; column-gap: 1.5rem; padding-bottom: 4rem; }
+    @media (max-width: 900px) { .gallery { column-count: 2; } }
+    @media (max-width: 600px) { .gallery { column-count: 1; } }
+    
+    .gallery-item { break-inside: avoid; margin-bottom: 1.5rem; border-radius: 4px; overflow: hidden; position: relative; background: var(--cream); cursor: pointer; transition: transform 0.4s ease, box-shadow 0.4s ease; }
+    .gallery-item img { display: block; width: 100%; height: auto; transition: transform 0.4s, filter 0.4s; }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-item:hover { box-shadow: 0 12px 32px rgba(45, 42, 38, 0.08); }
+    
+    .premium-badge { position: absolute; top: 1rem; right: 1rem; background: var(--charcoal); color: var(--ivory); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; z-index: 10; }
+    .locked img { filter: blur(15px); }
+    .locked::after { content: '🔒'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; z-index: 5; }
+    .locked:hover img { transform: none; }
+
+    /* PREMIUM */
+    #premium-view { display: none; max-width: 640px; margin: 0 auto; padding: 5rem 1rem; text-align: center; flex: 1; width: 100%; }
+    .price-card { border: 1px solid var(--border); padding: 2rem; margin: 2rem 0; background: white; }
+    .price { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; }
+    .qr-box { border: 2px dashed var(--border); padding: 2rem; margin-bottom: 2rem; background: white; }
+    .qr-box img { max-width: 200px; margin: 0 auto; display: block; }
+    .instructions { text-align: left; background: var(--cream); padding: 2rem; margin-bottom: 2rem; }
+    .instructions p { margin-bottom: 0.5rem; color: #4A4540; }
+    .password-box { background: white; border: 1px solid var(--border); padding: 2rem; }
+    .password-box input { width: 100%; padding: 1rem; border: 1px solid var(--border); margin-bottom: 1rem; }
+    .btn { padding: 1rem 2rem; background: var(--charcoal); color: var(--ivory); border: none; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; }
+    
+    footer { border-top: 1px solid var(--border); padding: 3rem 0; text-align: center; background: var(--cream); margin-top: auto; }
+
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 15, 15, 0.95); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; backdrop-filter: blur(10px); }
+    .lightbox.active { display: flex; opacity: 1; }
+    .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+    .close-lightbox { position: absolute; top: 2rem; right: 2rem; color: white; font-size: 3rem; cursor: pointer; z-index: 1001; }
+    .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 3rem; cursor: pointer; padding: 1rem; user-select: none; z-index: 1001; }
+    .prev-arrow { left: 2rem; }
+    .next-arrow { right: 2rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a onclick="showView('gallery')" class="brand">Asmee</a>
+      <div class="hamburger" onclick="toggleMenu()" id="hamburger-btn"><span></span><span></span><span></span></div>
+      <nav id="main-nav">
+        <a id="nav-gallery" onclick="showView('gallery'); toggleMenu(true)" class="active">Home</a>
+        <a id="nav-premium" onclick="showView('premium'); toggleMenu(true)">Premium</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="gallery-view">
+    <section class="intro container">
+      <p class="eyebrow">Curated Collection</p>
+      <h1>A world of quiet beauty</h1>
+      <p>A handpicked gallery of photographs — free to explore, with a premium collection for those who want more.</p>
+    </section>
+    <section class="gallery container" id="gallery-grid"></section>
+  </main>
+
+  <main id="premium-view">
+    <p class="eyebrow">Premium Access</p>
+    <h1>Unlock the full collection</h1>
+    <p>Get access to high-resolution photos and exclusive videos.</p>
+    <div class="price-card"><p class="price">Rs 2999</p><p style="font-size: 0.9rem;">One-time payment · Lifetime access</p></div>
+    <div class="qr-box">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PayBridgeNP_Payment" alt="QR Code">
+      <p style="margin-top: 1rem; font-size: 0.85rem;">Scan with eSewa, Khalti, or Fonepay</p>
+    </div>
+    <div class="instructions">
+      <h3 style="margin-bottom: 1rem;">How to unlock:</h3>
+      <p><strong>1.</strong> Scan the QR code above and pay Rs 2999.</p>
+      <p><strong>2.</strong> Send your transaction ID to <strong>your-email@example.com</strong>.</p>
+      <p><strong>3.</strong> You will receive a secret password.</p>
+    </div>
+    <div class="password-box">
+      <h3 style="margin-bottom: 1rem;">Enter your password</h3>
+      <input type="password" id="passcode" placeholder="Enter password here...">
+      <button class="btn" onclick="unlockPremium()">Unlock Content</button>
+      <p id="error-msg" style="color: red; margin-top: 1rem; display: none;">Incorrect password. Please try again.</p>
+    </div>
+  </main>
+
+  <footer><p>&copy; 2026 Asmee. All rights reserved.</p></footer>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <span class="close-lightbox" onclick="closeLightbox(event)">&times;</span>
+    <span class="nav-arrow prev-arrow" onclick="changeImage(-1, event)">&#10094;</span>
+    <img id="lightbox-img" src="" alt="Fullscreen view">
+    <span class="nav-arrow next-arrow" onclick="changeImage(1, event)">&#10095;</span>
+  </div>
+
+  <script>
+    const totalImages = 24;
+    const gallery = document.getElementById('gallery-grid');
+    const isUnlocked = localStorage.getItem('premiumUnlocked') === 'true';
+    let imageData = []; 
+    let currentImageIndex = 0;
+
+    for (let i = 1; i <= totalImages; i++) {
+      // 1. Convert 1 to 'a', 2 to 'b', up to 24 to 'x'
+      const letter = String.fromCharCode(96 + i); 
+      
+      // 2. Primary path: relative to the images folder
+      const imgSrc = `images/${letter}.jpg`; 
+      
+      // 3. Fallback path: absolute raw GitHub URL (guarantees it loads)
+      const fallbackSrc = `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${letter}.jpg`;
+      
+      const isPremium = i > 18; 
+
+      imageData.push({ src: imgSrc, isPremium: isPremium });
+
+      const figure = document.createElement('figure');
+      figure.className = `gallery-item ${isPremium && !isUnlocked ? 'locked' : ''}`;
+      
+      if (isPremium && !isUnlocked) {
+        figure.onclick = () => showView('premium');
+      } else {
+        figure.onclick = () => openLightbox(i - 1);
+      }
+
+      // If the first path fails, the onerror instantly swaps to the raw GitHub URL
+      let html = `<img src="${imgSrc}" alt="Gallery image ${letter}" loading="lazy" onerror="this.onerror=null; this.src='${fallbackSrc}';" style="min-height: 200px; background: #eee;">`;
+      
+      if (isPremium && !isUnlocked) {
+        html += `<div class="premium-badge">✦ Premium</div>`;
+      }
+
+      figure.innerHTML = html;
+      gallery.appendChild(figure);
+    }
+
+    function toggleMenu(forceClose = false) {
+      const nav = document.getElementById('main-nav');
+      const btn = document.getElementById('hamburger-btn');
+      if (forceClose) { nav.classList.remove('active'); btn.classList.remove('active'); } 
+      else { nav.classList.toggle('active'); btn.classList.toggle('active'); }
+    }
+
+    function showView(viewName) {
+      document.getElementById('gallery-view').style.display = viewName === 'premium' ? 'none' : 'block';
+      document.getElementById('premium-view').style.display = viewName === 'premium' ? 'block' : 'none';
+      document.getElementById('nav-gallery').classList.toggle('active', viewName !== 'premium');
+      document.getElementById('nav-premium').classList.toggle('active', viewName === 'premium');
+      window.scrollTo(0, 0);
+    }
+
+    function openLightbox(index) {
+      if (imageData[index].isPremium && !isUnlocked) return; 
+      currentImageIndex = index;
+      document.getElementById('lightbox-img').src = imageData[index].src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(event) {
+      if (event && event.target.tagName === 'IMG') return;
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    function changeImage(direction, event) {
+      if(event) event.stopPropagation();
+      let newIndex = currentImageIndex + direction;
+      if (newIndex < 0) newIndex = imageData.length - 1;
+      if (newIndex >= imageData.length) newIndex = 0;
+      if (imageData[newIndex].isPremium && !isUnlocked) {
+        newIndex = direction > 0 ? 0 : 17; 
+      }
+      currentImageIndex = newIndex;
+      document.getElementById('lightbox-img').src = imageData[currentImageIndex].src;
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (document.getElementById('lightbox').classList.contains('active')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') changeImage(1);
+        if (e.key === 'ArrowLeft') changeImage(-1);
+      }
+    });
+
+    function unlockPremium() {
+      if (document.getElementById('passcode').value === "asmee2026") {
+        localStorage.setItem('premiumUnlocked', 'true');
+        window.location.reload(); 
+      } else {
+        document.getElementById('error-msg').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
