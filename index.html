@@ -90,36 +90,44 @@
     .intro { text-align: center; padding: 6rem 1rem 3rem; }
     .eyebrow { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
 
-    /* TOP VIDEO ROW (Responsive Grid) */
+    /* ⚠️ BIGGER TOP VIDEO ROW (Breaks out of standard container) */
     .video-grid { 
       display: grid; 
       grid-template-columns: repeat(3, 1fr); 
       gap: 1.5rem; 
-      margin-bottom: 4rem;
-      padding-bottom: 2rem;
+      margin-bottom: 5rem;
+      padding-bottom: 3rem;
       border-bottom: 1px solid rgba(232, 221, 210, 0.5);
+      
+      /* Makes videos stretch wider and bigger */
+      width: 100%;
+      max-width: 1600px; 
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
     /* Tablet: 2 columns */
     @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
     /* Mobile: 1 column */
-    @media (max-width: 600px) { .video-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .video-grid { grid-template-columns: 1fr; padding-left: 1rem; padding-right: 1rem; } }
     
     .video-item { 
-      border-radius: 8px; 
+      border-radius: 10px; 
       overflow: hidden; 
       position: relative; 
       background: #000; 
       aspect-ratio: 16/9;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
       cursor: pointer;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-    .video-item:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(45, 42, 38, 0.2); }
+    .video-item:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(45, 42, 38, 0.25); }
     .video-item video { width: 100%; height: 100%; object-fit: cover; }
     
-    .video-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 5; border: 2px solid rgba(255,255,255,0.8); transition: 0.3s; }
-    .video-badge::after { content: '▶'; color: white; font-size: 1.2rem; margin-left: 4px; }
-    .video-item:hover .video-badge { background: rgba(184, 151, 90, 0.9); transform: translate(-50%, -50%) scale(1.1); }
+    .video-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 5; border: 2px solid rgba(255,255,255,0.9); transition: 0.3s; }
+    .video-badge::after { content: '▶'; color: white; font-size: 1.5rem; margin-left: 5px; }
+    .video-item:hover .video-badge { background: rgba(184, 151, 90, 0.95); transform: translate(-50%, -50%) scale(1.15); }
 
     /* PHOTO MASONRY GALLERY */
     .gallery { column-count: 3; column-gap: 1.5rem; padding-bottom: 4rem; }
@@ -183,7 +191,7 @@
     .btn { padding: 1rem 2rem; background: var(--charcoal); color: var(--ivory); border: none; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 8px; transition: 0.3s; font-weight: 500; }
     .btn:hover { background: var(--gold); color: var(--charcoal); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(184, 151, 90, 0.3); }
     
-    /* FOOTER (Added bottom padding to prevent Chat button overlap) */
+    /* FOOTER */
     footer { border-top: 1px solid rgba(232, 221, 210, 0.5); padding: 3rem 0 100px 0; text-align: center; background: rgba(245, 237, 228, 0.5); backdrop-filter: blur(10px); margin-top: auto; }
     .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; }
     .social-links a { color: var(--charcoal); transition: color 0.3s, transform 0.3s; display: inline-block; }
@@ -204,22 +212,11 @@
     .next-arrow { right: 1rem; }
 
     /* ⚠️ FLOATING BUTTONS (Perfectly Aligned) */
-    
-    /* Top Left (Blinking Follow Me) */
     .fb-top-left {
-      position: fixed;
-      top: 110px; /* Clears the header */
-      left: 30px; 
-      background: #1877F2;
-      color: white !important;
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 16px; border-radius: 50px;
-      font-size: 0.85rem; font-weight: 600;
-      text-decoration: none;
-      z-index: 9999;
-      box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
-      animation: blink-bg 2s infinite;
-      transition: 0.3s;
+      position: fixed; top: 110px; left: 30px; background: #1877F2; color: white !important;
+      display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 600; text-decoration: none; z-index: 9999;
+      box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4); animation: blink-bg 2s infinite; transition: 0.3s;
     }
     .fb-top-left:hover { background: #166fe5; transform: scale(1.05); }
     .fb-top-left svg { width: 18px; height: 18px; fill: white; }
@@ -229,27 +226,15 @@
       50% { opacity: 0.7; transform: scale(0.95); }
     }
 
-    /* Bottom Right (Chat Only) */
     .floating-container {
-      position: fixed;
-      bottom: 40px; /* Raised to avoid edge */
-      right: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 9999;
+      position: fixed; bottom: 40px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 9999;
     }
 
     .chat-btn {
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      color: white !important;
-      padding: 12px 20px; border-radius: 50px;
-      font-size: 0.9rem; font-weight: 600; 
-      text-decoration: none;
-      transition: 0.3s;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-      background: #0084FF !important; 
-      animation: pulse-border 2s infinite;
+      color: white !important; padding: 12px 20px; border-radius: 50px;
+      font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: 0.3s;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2); background: #0084FF !important; animation: pulse-border 2s infinite;
     }
     
     .chat-btn:hover { background: #006ce0 !important; transform: translateY(-3px) scale(1.05); }
@@ -261,7 +246,6 @@
       100% { box-shadow: 0 0 0 0 rgba(0, 132, 255, 0); }
     }
 
-    /* Mobile Adjustments for floating buttons */
     @media (max-width: 768px) {
       .fb-top-left { top: 85px; left: 20px; padding: 8px 12px; font-size: 0.75rem; }
       .floating-container { bottom: 25px; right: 20px; }
@@ -284,13 +268,11 @@
     </div>
   </header>
 
-  <!-- TOP LEFT BLINKING FOLLOW BUTTON -->
   <a href="https://www.facebook.com/awsmee16/" target="_blank" class="fb-top-left">
     <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
     Follow Me
   </a>
 
-  <!-- BOTTOM RIGHT FLOATING BUTTON (Chat Only) -->
   <div class="floating-container">
     <a href="https://m.me/awsmee16" target="_blank" class="chat-btn">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.14.26.35.27.57l.05 1.78c.01.57.61.94 1.13.7l1.98-.88c.16-.07.35-.09.52-.04 1.02.28 2.11.43 3.23.43 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm3.28 12.17c-.2.2-.52.2-.72 0l-2.1-2.1c-.2-.2-.2-.52 0-.72l2.1-2.1c.2-.2.52-.2.72 0l2.1 2.1c.2.2.2.52 0 .72l-2.1 2.1zm-5.62 0c-.2.2-.52.2-.72 0l-2.1-2.1c-.2-.2-.2-.52 0-.72l2.1-2.1c.2-.2.52-.2.72 0l2.1 2.1c.2.2.2.52 0 .72l-2.1 2.1z"/></svg>
@@ -298,7 +280,6 @@
     </a>
   </div>
 
-  <!-- MAIN GALLERY -->
   <main id="gallery-view">
     <section class="intro container">
       <p class="eyebrow">Curated Collection</p>
@@ -307,13 +288,12 @@
     </section>
 
     <!-- VIDEOS ROW -->
-    <section class="video-grid container" id="video-grid"></section>
+    <section class="video-grid" id="video-grid"></section>
 
     <!-- PHOTOS MASONRY -->
     <section class="gallery container" id="gallery-grid"></section>
   </main>
 
-  <!-- PREMIUM PAGE -->
   <main id="premium-view">
     <p class="eyebrow">Premium Access</p>
     <h1>Unlock the full collection</h1>
@@ -344,7 +324,6 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <p>&copy; 2026 Asmee. All rights reserved.</p>
     
@@ -361,7 +340,6 @@
     </div>
   </footer>
 
-  <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
     <span class="close-lightbox" onclick="closeLightbox(event)">&times;</span>
     <span class="nav-arrow prev-arrow" onclick="changeMedia(-1, event)">&#10094;</span>
@@ -369,7 +347,6 @@
     <span class="nav-arrow next-arrow" onclick="changeMedia(1, event)">&#10095;</span>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
   <script>
     const videoGrid = document.getElementById('video-grid');
     const galleryGrid = document.getElementById('gallery-grid');
@@ -399,7 +376,7 @@
         type: 'image', 
         src: `images/${letter}.jpg`, 
         fallback: `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${letter}.jpg`,
-        isPremium: i > 18 // Last 6 images are premium
+        isPremium: i > 18 
       };
       imagesData.push(item);
       allMediaData.push(item);
@@ -468,7 +445,6 @@
       const contentDiv = document.getElementById('lightbox-content');
       const item = allMediaData[index];
       
-      // Clear previous content completely to kill old audio/video
       contentDiv.innerHTML = '';
 
       if (item.type === 'video') {
