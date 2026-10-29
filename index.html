@@ -35,7 +35,7 @@
       -webkit-font-smoothing: antialiased; 
     }
 
-    /* ⚠️ DYNAMIC SCREENSAVER BACKGROUND */
+    /* DYNAMIC SCREENSAVER BACKGROUND */
     body::before {
       content: '';
       position: fixed;
@@ -106,7 +106,6 @@
       background: var(--cream); 
       cursor: pointer; 
       box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-      /* Entrance animation */
       opacity: 0;
       transform: translateY(30px);
       animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -116,29 +115,31 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .gallery-item img { display: block; width: 100%; height: auto; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .gallery-item img, .gallery-item video { display: block; width: 100%; height: auto; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     
-    /* ⚠️ ROTATING HOVER EFFECTS (Fancy Lady Site Vibes) */
-    /* Effect 1: Deep Zoom & Shadow */
+    /* ROTATING HOVER EFFECTS */
     .gallery-item:nth-child(3n+1):hover { box-shadow: 0 20px 40px rgba(45, 42, 38, 0.15); z-index: 2; }
-    .gallery-item:nth-child(3n+1):hover img { transform: scale(1.08) translateY(-5px); }
+    .gallery-item:nth-child(3n+1):hover img, .gallery-item:nth-child(3n+1):hover video { transform: scale(1.08) translateY(-5px); }
     
-    /* Effect 2: Elegant Tilt & Brighten */
     .gallery-item:nth-child(3n+2):hover { z-index: 2; }
-    .gallery-item:nth-child(3n+2):hover img { transform: scale(1.06) rotate(2deg); filter: brightness(1.08) contrast(1.05); }
+    .gallery-item:nth-child(3n+2):hover img, .gallery-item:nth-child(3n+2):hover video { transform: scale(1.06) rotate(2deg); filter: brightness(1.08) contrast(1.05); }
     
-    /* Effect 3: Soft Saturate & Focus */
     .gallery-item:nth-child(3n):hover { z-index: 2; }
-    .gallery-item:nth-child(3n):hover img { transform: scale(1.1); filter: saturate(1.2) sepia(0.1); }
+    .gallery-item:nth-child(3n):hover img, .gallery-item:nth-child(3n):hover video { transform: scale(1.1); filter: saturate(1.2) sepia(0.1); }
+
+    /* VIDEO SPECIFIC STYLES */
+    .video-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 5; border: 2px solid rgba(255,255,255,0.8); transition: 0.3s; }
+    .video-badge::after { content: '▶'; color: white; font-size: 1.5rem; margin-left: 5px; }
+    .gallery-item:hover .video-badge { background: rgba(184, 151, 90, 0.9); transform: translate(-50%, -50%) scale(1.1); }
 
     .premium-badge { position: absolute; top: 1rem; right: 1rem; background: rgba(45, 42, 38, 0.85); backdrop-filter: blur(4px); color: var(--ivory); padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; z-index: 10; transition: 0.3s; }
     .gallery-item:hover .premium-badge { background: var(--gold); color: var(--charcoal); }
     
-    .locked img { filter: blur(15px); transform: scale(1.1); }
-    .locked::after { content: '🔒'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; z-index: 5; transition: 0.4s; }
+    .locked img, .locked video { filter: blur(15px); transform: scale(1.1); }
+    .locked::after { content: '🔒'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; z-index: 6; transition: 0.4s; }
     .locked:hover::after { transform: translate(-50%, -50%) scale(1.2); }
 
-    /* PREMIUM VIEW (Glassmorphism) */
+    /* PREMIUM VIEW */
     #premium-view { display: none; max-width: 640px; margin: 0 auto; padding: 5rem 1rem; text-align: center; flex: 1; width: 100%; }
     .price-card, .qr-box, .instructions, .password-box { 
       border: 1px solid rgba(255, 255, 255, 0.6); 
@@ -163,29 +164,25 @@
     .btn { padding: 1rem 2rem; background: var(--charcoal); color: var(--ivory); border: none; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 8px; transition: 0.3s; font-weight: 500; }
     .btn:hover { background: var(--gold); color: var(--charcoal); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(184, 151, 90, 0.3); }
     
-    /* FOOTER & SOCIAL LINKS */
+    /* FOOTER */
     footer { border-top: 1px solid rgba(232, 221, 210, 0.5); padding: 3rem 0; text-align: center; background: rgba(245, 237, 228, 0.5); backdrop-filter: blur(10px); margin-top: auto; }
     .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; }
     .social-links a { color: var(--charcoal); transition: color 0.3s, transform 0.3s; display: inline-block; }
     .social-links a:hover { color: var(--gold); transform: translateY(-5px) scale(1.1); }
     .social-links svg { width: 24px; height: 24px; }
 
-    /* ⚠️ FULL-SCREEN SCREENSAVER LIGHTBOX */
+    /* FULL-SCREEN SCREENSAVER LIGHTBOX */
     .lightbox { 
       display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-      background: rgba(15, 15, 15, 0.9); z-index: 1000; 
+      background: rgba(15, 15, 15, 0.95); z-index: 1000; 
       justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease;
       backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
     }
     .lightbox.active { display: flex; opacity: 1; }
     
-    /* Ken Burns effect for the screensaver image */
-    .lightbox img { 
-      max-width: 90%; max-height: 90vh; border-radius: 8px; 
-      box-shadow: 0 0 60px rgba(0,0,0,0.6); 
-      object-fit: contain;
-      animation: kenBurns 15s ease-in-out infinite alternate;
-    }
+    /* Lightbox Content (Handles both Image and Video) */
+    #lightbox-content img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.6); object-fit: contain; animation: kenBurns 15s ease-in-out infinite alternate; }
+    #lightbox-content video { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.6); outline: none; }
 
     @keyframes kenBurns {
       0% { transform: scale(1) translate(0, 0); }
@@ -219,7 +216,7 @@
     <section class="intro container">
       <p class="eyebrow">Curated Collection</p>
       <h1>A world of quiet beauty</h1>
-      <p>A handpicked gallery of photographs — free to explore, with a premium collection for those who want more.</p>
+      <p>A handpicked gallery of photographs and videos — free to explore, with a premium collection for those who want more.</p>
     </section>
     <section class="gallery container" id="gallery-grid"></section>
   </main>
@@ -260,15 +257,12 @@
     <p>&copy; 2026 Asmee. All rights reserved.</p>
     
     <div class="social-links">
-      <!-- Instagram -->
       <a href="https://www.instagram.com/asmeechhetri16/" target="_blank" aria-label="Instagram">
         <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
       </a>
-      <!-- Facebook -->
       <a href="https://www.facebook.com/awsmee16/" target="_blank" aria-label="Facebook">
         <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
       </a>
-      <!-- TikTok -->
       <a href="https://www.tiktok.com/@awsmee16" target="_blank" aria-label="TikTok">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"></path></svg>
       </a>
@@ -278,53 +272,73 @@
   <!-- LIGHTBOX SCREENSAVER -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
     <span class="close-lightbox" onclick="closeLightbox(event)">&times;</span>
-    <span class="nav-arrow prev-arrow" onclick="changeImage(-1, event)">&#10094;</span>
-    <img id="lightbox-img" src="" alt="Fullscreen view">
-    <span class="nav-arrow next-arrow" onclick="changeImage(1, event)">&#10095;</span>
+    <span class="nav-arrow prev-arrow" onclick="changeMedia(-1, event)">&#10094;</span>
+    <div id="lightbox-content"></div>
+    <span class="nav-arrow next-arrow" onclick="changeMedia(1, event)">&#10095;</span>
   </div>
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    const totalImages = 24;
     const gallery = document.getElementById('gallery-grid');
     const isUnlocked = localStorage.getItem('premiumUnlocked') === 'true';
-    let imageData = []; 
-    let currentImageIndex = 0;
+    let mediaData = []; 
+    let currentMediaIndex = 0;
 
-    // 1. GENERATE IMAGES WITH STAGGERED ANIMATIONS
-    for (let i = 1; i <= totalImages; i++) {
+    // 1. BUILD THE GALLERY DATA (Video First, then Images)
+    // Add Video (Asmita.mp4)
+    mediaData.push({ 
+      type: 'video', 
+      src: 'images/asmita.mp4', 
+      fallback: 'https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/asmita.mp4',
+      isPremium: false 
+    });
+
+    // Add 24 Images (a.jpg to x.jpg)
+    for (let i = 1; i <= 24; i++) {
       const letter = String.fromCharCode(96 + i); 
-      
-      const imgSrc = `images/${letter}.jpg`; 
-      const fallbackSrc = `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${letter}.jpg`;
-      
-      const isPremium = i > 18; 
+      mediaData.push({ 
+        type: 'image', 
+        src: `images/${letter}.jpg`, 
+        fallback: `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${letter}.jpg`,
+        isPremium: i > 18 // Last 6 are premium
+      });
+    }
 
-      imageData.push({ src: imgSrc, isPremium: isPremium });
-
+    // 2. RENDER GALLERY
+    mediaData.forEach((item, index) => {
       const figure = document.createElement('figure');
-      figure.className = `gallery-item ${isPremium && !isUnlocked ? 'locked' : ''}`;
+      figure.className = `gallery-item ${item.isPremium && !isUnlocked ? 'locked' : ''}`;
       
       // Staggered animation delay
-      figure.style.animationDelay = `${i * 0.05}s`;
+      figure.style.animationDelay = `${index * 0.05}s`;
       
-      if (isPremium && !isUnlocked) {
+      if (item.isPremium && !isUnlocked) {
         figure.onclick = () => showView('premium');
       } else {
-        figure.onclick = () => openLightbox(i - 1);
+        figure.onclick = () => openLightbox(index);
       }
 
-      let html = `<img src="${imgSrc}" alt="Gallery image ${letter}" loading="lazy" onerror="this.onerror=null; this.src='${fallbackSrc}';" style="min-height: 200px; background: #eee;">`;
+      let html = '';
+      if (item.type === 'video') {
+        // Render video preview in grid (muted, looping)
+        html = `<video src="${item.src}" autoplay muted loop playsinline onerror="this.onerror=null; this.src='${item.fallback}';" style="min-height: 200px; background: #000;"></video>`;
+        if (!item.isPremium || isUnlocked) {
+          html += `<div class="video-badge"></div>`;
+        }
+      } else {
+        // Render image
+        html = `<img src="${item.src}" alt="Gallery image" loading="lazy" onerror="this.onerror=null; this.src='${item.fallback}';" style="min-height: 200px; background: #eee;">`;
+      }
       
-      if (isPremium && !isUnlocked) {
+      if (item.isPremium && !isUnlocked) {
         html += `<div class="premium-badge">✦ Premium</div>`;
       }
 
       figure.innerHTML = html;
       gallery.appendChild(figure);
-    }
+    });
 
-    // 2. MOBILE HAMBURGER MENU
+    // 3. MOBILE MENU
     function toggleMenu(forceClose = false) {
       const nav = document.getElementById('main-nav');
       const btn = document.getElementById('hamburger-btn');
@@ -337,7 +351,7 @@
       }
     }
 
-    // 3. SWITCH BETWEEN VIEWS
+    // 4. VIEW SWITCHING
     function showView(viewName) {
       document.getElementById('gallery-view').style.display = viewName === 'premium' ? 'none' : 'block';
       document.getElementById('premium-view').style.display = viewName === 'premium' ? 'block' : 'none';
@@ -346,58 +360,66 @@
       window.scrollTo(0, 0);
     }
 
-    // 4. LIGHTBOX (SCREENSAVER)
+    // 5. LIGHTBOX SCREENSAVER (Handles Images AND Video)
     function openLightbox(index) {
-      if (imageData[index].isPremium && !isUnlocked) return; 
-      currentImageIndex = index;
+      if (mediaData[index].isPremium && !isUnlocked) return; 
+      currentMediaIndex = index;
       
-      const imgEl = document.getElementById('lightbox-img');
-      imgEl.src = imageData[index].src;
+      const contentDiv = document.getElementById('lightbox-content');
+      const item = mediaData[index];
       
-      // Restart Ken Burns animation
-      imgEl.style.animation = 'none';
-      imgEl.offsetHeight; /* trigger reflow */
-      imgEl.style.animation = 'kenBurns 15s ease-in-out infinite alternate';
+      if (item.type === 'video') {
+        // Inject Video Player with Controls
+        contentDiv.innerHTML = `<video src="${item.src}" controls autoplay playsinline style="animation: none;" onerror="this.onerror=null; this.src='${item.fallback}';"></video>`;
+      } else {
+        // Inject Image with Ken Burns
+        contentDiv.innerHTML = `<img src="${item.src}" alt="Fullscreen view" onerror="this.onerror=null; this.src='${item.fallback}';">`;
+        
+        // Restart Ken Burns animation
+        const imgEl = contentDiv.querySelector('img');
+        imgEl.style.animation = 'none';
+        imgEl.offsetHeight; /* trigger reflow */
+        imgEl.style.animation = 'kenBurns 15s ease-in-out infinite alternate';
+      }
       
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox(event) {
-      if (event && event.target.tagName === 'IMG') return;
+      // Prevent closing if clicking the media itself or video controls
+      if (event && (event.target.tagName === 'IMG' || event.target.tagName === 'VIDEO')) return;
+      
       document.getElementById('lightbox').classList.remove('active');
+      document.getElementById('lightbox-content').innerHTML = ''; // Stop video playing
       document.body.style.overflow = 'auto';
     }
 
-    function changeImage(direction, event) {
+    function changeMedia(direction, event) {
       if(event) event.stopPropagation();
-      let newIndex = currentImageIndex + direction;
-      if (newIndex < 0) newIndex = imageData.length - 1;
-      if (newIndex >= imageData.length) newIndex = 0;
+      let newIndex = currentMediaIndex + direction;
       
-      if (imageData[newIndex].isPremium && !isUnlocked) {
-        newIndex = direction > 0 ? 0 : 17; 
+      // Wrap around the gallery
+      if (newIndex < 0) newIndex = mediaData.length - 1;
+      if (newIndex >= mediaData.length) newIndex = 0;
+      
+      // Skip premium items if locked
+      if (mediaData[newIndex].isPremium && !isUnlocked) {
+        newIndex = direction > 0 ? 0 : 17; // Loop back to start or end of free items
       }
-      currentImageIndex = newIndex;
       
-      const imgEl = document.getElementById('lightbox-img');
-      imgEl.src = imageData[currentImageIndex].src;
-      
-      // Restart Ken Burns animation
-      imgEl.style.animation = 'none';
-      imgEl.offsetHeight; 
-      imgEl.style.animation = 'kenBurns 15s ease-in-out infinite alternate';
+      openLightbox(newIndex);
     }
 
     document.addEventListener('keydown', function(e) {
       if (document.getElementById('lightbox').classList.contains('active')) {
         if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowRight') changeImage(1);
-        if (e.key === 'ArrowLeft') changeImage(-1);
+        if (e.key === 'ArrowRight') changeMedia(1);
+        if (e.key === 'ArrowLeft') changeMedia(-1);
       }
     });
 
-    // 5. UNLOCK PREMIUM
+    // 6. UNLOCK PREMIUM
     function unlockPremium() {
       if (document.getElementById('passcode').value === "asmee2026") {
         localStorage.setItem('premiumUnlocked', 'true');
