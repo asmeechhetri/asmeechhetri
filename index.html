@@ -90,7 +90,7 @@
     .intro { text-align: center; padding: 6rem 1rem 3rem; }
     .eyebrow { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
 
-    /* ⚠️ BIGGER TOP VIDEO ROW (Breaks out of standard container) */
+    /* BIGGER TOP VIDEO ROW */
     .video-grid { 
       display: grid; 
       grid-template-columns: repeat(3, 1fr); 
@@ -98,8 +98,6 @@
       margin-bottom: 5rem;
       padding-bottom: 3rem;
       border-bottom: 1px solid rgba(232, 221, 210, 0.5);
-      
-      /* Makes videos stretch wider and bigger */
       width: 100%;
       max-width: 1600px; 
       margin-left: auto;
@@ -107,9 +105,7 @@
       padding-left: 2rem;
       padding-right: 2rem;
     }
-    /* Tablet: 2 columns */
     @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
-    /* Mobile: 1 column */
     @media (max-width: 600px) { .video-grid { grid-template-columns: 1fr; padding-left: 1rem; padding-right: 1rem; } }
     
     .video-item { 
@@ -129,40 +125,53 @@
     .video-badge::after { content: '▶'; color: white; font-size: 1.5rem; margin-left: 5px; }
     .video-item:hover .video-badge { background: rgba(184, 151, 90, 0.95); transform: translate(-50%, -50%) scale(1.15); }
 
-    /* PHOTO MASONRY GALLERY */
-    .gallery { column-count: 3; column-gap: 1.5rem; padding-bottom: 4rem; }
-    @media (max-width: 900px) { .gallery { column-count: 2; } }
-    @media (max-width: 600px) { .gallery { column-count: 1; } }
+    /* ⚠️ PERFECT UNIFORM PHOTO GRID (NO GAPS) */
+    .gallery { 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 1.5rem; 
+      padding-bottom: 4rem; 
+    }
+    @media (max-width: 900px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .gallery { grid-template-columns: 1fr; } }
     
     .gallery-item { 
-      break-inside: avoid; margin-bottom: 1.5rem; border-radius: 6px; overflow: hidden; position: relative; 
-      background: var(--cream); cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-      opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      border-radius: 8px; 
+      overflow: hidden; 
+      position: relative; 
+      background: var(--cream); 
+      cursor: pointer; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      
+      /* Forces all images to be the exact same shape, removing gaps */
+      aspect-ratio: 3 / 4; 
+      
+      opacity: 0; 
+      transform: translateY(30px); 
+      animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
+    
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    .gallery-item img { display: block; width: 100%; height: auto; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     
-    /* HOVER EFFECTS (Applied only to Free items) */
-    .gallery-item:not(.locked):nth-child(3n+1):hover { box-shadow: 0 20px 40px rgba(45, 42, 38, 0.15); z-index: 2; }
-    .gallery-item:not(.locked):nth-child(3n+1):hover img { transform: scale(1.08) translateY(-5px); }
+    .gallery-item img { 
+      display: block; 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; /* Crops images perfectly to fill the box */
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    }
     
-    .gallery-item:not(.locked):nth-child(3n+2):hover { z-index: 2; }
-    .gallery-item:not(.locked):nth-child(3n+2):hover img { transform: scale(1.06) rotate(2deg); filter: brightness(1.08) contrast(1.05); }
-    
-    .gallery-item:not(.locked):nth-child(3n):hover { z-index: 2; }
-    .gallery-item:not(.locked):nth-child(3n):hover img { transform: scale(1.1); filter: saturate(1.2) sepia(0.1); }
+    /* ELEGANT HOVER EFFECTS */
+    .gallery-item:not(.locked):hover { box-shadow: 0 20px 40px rgba(45, 42, 38, 0.15); z-index: 2; transform: translateY(-5px); }
+    .gallery-item:not(.locked):hover img { transform: scale(1.08); }
 
     .premium-badge { position: absolute; top: 1rem; right: 1rem; background: rgba(45, 42, 38, 0.85); backdrop-filter: blur(4px); color: var(--ivory); padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; z-index: 10; transition: 0.3s; }
     
-    /* LOCKED IMAGES FIX */
+    /* LOCKED IMAGES */
     .gallery-item.locked img { 
       filter: blur(20px) !important; 
-      transform: scale(1.1) !important; 
       pointer-events: none;
-    }
-    .gallery-item.locked:hover img {
-      filter: blur(20px) !important; 
-      transform: scale(1.1) !important; 
     }
     .gallery-item.locked::after { 
       content: '🔒'; position: absolute; top: 50%; left: 50%; 
@@ -211,7 +220,7 @@
     .prev-arrow { left: 1rem; }
     .next-arrow { right: 1rem; }
 
-    /* ⚠️ FLOATING BUTTONS (Perfectly Aligned) */
+    /* FLOATING BUTTONS */
     .fb-top-left {
       position: fixed; top: 110px; left: 30px; background: #1877F2; color: white !important;
       display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 50px;
@@ -287,10 +296,8 @@
       <p>A handpicked gallery of photographs and videos — free to explore, with a premium collection for those who want more.</p>
     </section>
 
-    <!-- VIDEOS ROW -->
     <section class="video-grid" id="video-grid"></section>
 
-    <!-- PHOTOS MASONRY -->
     <section class="gallery container" id="gallery-grid"></section>
   </main>
 
@@ -356,7 +363,6 @@
     let imagesData = [];
     let allMediaData = []; 
 
-    // 1. SETUP VIDEOS (Order: a.mp4, asmita.mp4, b.mp4)
     const videoNames = ['a.mp4', 'asmita.mp4', 'b.mp4'];
     videoNames.forEach((vid) => {
       const item = {
@@ -369,7 +375,6 @@
       allMediaData.push(item);
     });
 
-    // 2. SETUP IMAGES (a.jpg to x.jpg)
     for (let i = 1; i <= 24; i++) {
       const letter = String.fromCharCode(96 + i); 
       const item = {
@@ -382,7 +387,6 @@
       allMediaData.push(item);
     }
 
-    // 3. RENDER VIDEOS
     videosData.forEach((item, index) => {
       const div = document.createElement('div');
       div.className = 'video-item';
@@ -395,7 +399,6 @@
       videoGrid.appendChild(div);
     });
 
-    // 4. RENDER IMAGES
     imagesData.forEach((item, index) => {
       const globalIndex = videosData.length + index;
       const figure = document.createElement('figure');
@@ -409,7 +412,7 @@
         figure.onclick = () => openLightbox(globalIndex);
       }
 
-      let html = `<img src="${item.src}" alt="Gallery image" loading="lazy" onerror="this.onerror=null; this.src='${item.fallback}';" style="min-height: 200px; background: #eee;">`;
+      let html = `<img src="${item.src}" alt="Gallery image" loading="lazy" onerror="this.onerror=null; this.src='${item.fallback}';">`;
       
       if (item.isPremium && !isUnlocked) {
         html += `<div class="premium-badge">✦ Premium</div>`;
@@ -419,7 +422,6 @@
       galleryGrid.appendChild(figure);
     });
 
-    // 5. MENU & VIEWS
     function toggleMenu(forceClose = false) {
       const nav = document.getElementById('main-nav');
       const btn = document.getElementById('hamburger-btn');
@@ -435,7 +437,6 @@
       window.scrollTo(0, 0);
     }
 
-    // 6. LIGHTBOX
     let currentMediaIndex = 0;
 
     function openLightbox(index) {
@@ -488,7 +489,6 @@
       }
     });
 
-    // 7. UNLOCK
     function unlockPremium() {
       if (document.getElementById('passcode').value === "asmee2026") {
         localStorage.setItem('premiumUnlocked', 'true');
