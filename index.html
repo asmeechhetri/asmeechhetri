@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asmee</title>
   
-  <!-- YOUR FAVICON -->
+  <!-- FAVICON -->
   <link rel="icon" type="image/png" href="images/favicon.png">
   
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -35,22 +35,23 @@
       -webkit-font-smoothing: antialiased; 
     }
 
-    /* DYNAMIC SCREENSAVER BACKGROUND */
+    /* DYNAMIC SCREENSAVER BACKGROUND (Moving Mesh) */
     body::before {
       content: '';
       position: fixed;
       top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle at 50% 50%, rgba(245, 237, 228, 0.5) 0%, transparent 60%),
-                  radial-gradient(circle at 80% 20%, rgba(201, 169, 166, 0.15) 0%, transparent 50%),
-                  radial-gradient(circle at 20% 80%, rgba(184, 151, 90, 0.1) 0%, transparent 50%);
+      background: radial-gradient(circle at 20% 30%, rgba(201, 169, 166, 0.2) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 70%, rgba(184, 151, 90, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 50% 50%, rgba(245, 237, 228, 0.5) 0%, transparent 50%);
       z-index: -1;
-      animation: slowSpin 30s linear infinite;
+      animation: moveBg 25s linear infinite;
       pointer-events: none;
     }
 
-    @keyframes slowSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes moveBg {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
     }
 
     h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
@@ -58,15 +59,12 @@
     a { color: var(--charcoal); text-decoration: none; cursor: pointer; transition: 0.3s; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; }
     
-    /* GLASSMORPHISM HEADER */
+    /* HEADER */
     header { 
       border-bottom: 1px solid rgba(232, 221, 210, 0.5); 
       background: rgba(253, 248, 243, 0.7); 
-      position: sticky; 
-      top: 0; 
-      z-index: 100; 
-      backdrop-filter: blur(16px); 
-      -webkit-backdrop-filter: blur(16px);
+      position: sticky; top: 0; z-index: 100; 
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     }
     .header-inner { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; max-width: 1200px; margin: 0 auto; }
     .brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; letter-spacing: 1px; }
@@ -77,7 +75,7 @@
     nav a:hover::after, nav a.active::after { width: 100%; }
     nav a:hover, nav a.active { color: var(--charcoal); }
     
-    /* HAMBURGER */
+    /* MOBILE MENU */
     .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 101; }
     .hamburger span { display: block; width: 25px; height: 2px; background: var(--charcoal); transition: 0.3s; }
     @media (max-width: 768px) {
@@ -89,65 +87,71 @@
       .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     }
 
-    /* GALLERY & ENTRANCE ANIMATIONS */
     .intro { text-align: center; padding: 5rem 1rem 3rem; }
     .eyebrow { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+
+    /* TOP VIDEO ROW (Fixed 3 Columns) */
+    .video-grid { 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 1.5rem; 
+      margin-bottom: 4rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(232, 221, 210, 0.5);
+    }
+    @media (max-width: 900px) { .video-grid { grid-template-columns: 1fr; } }
     
+    .video-item { 
+      border-radius: 8px; 
+      overflow: hidden; 
+      position: relative; 
+      background: #000; 
+      aspect-ratio: 16/9; /* Keeps all videos exactly the same size */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .video-item:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(45, 42, 38, 0.2); }
+    .video-item video { width: 100%; height: 100%; object-fit: cover; }
+    
+    .video-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 5; border: 2px solid rgba(255,255,255,0.8); transition: 0.3s; }
+    .video-badge::after { content: '▶'; color: white; font-size: 1.2rem; margin-left: 4px; }
+    .video-item:hover .video-badge { background: rgba(184, 151, 90, 0.9); transform: translate(-50%, -50%) scale(1.1); }
+
+    /* PHOTO MASONRY GALLERY */
     .gallery { column-count: 3; column-gap: 1.5rem; padding-bottom: 4rem; }
     @media (max-width: 900px) { .gallery { column-count: 2; } }
     @media (max-width: 600px) { .gallery { column-count: 1; } }
     
     .gallery-item { 
-      break-inside: avoid; 
-      margin-bottom: 1.5rem; 
-      border-radius: 6px; 
-      overflow: hidden; 
-      position: relative; 
-      background: var(--cream); 
-      cursor: pointer; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      break-inside: avoid; margin-bottom: 1.5rem; border-radius: 6px; overflow: hidden; position: relative; 
+      background: var(--cream); cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .gallery-item img, .gallery-item video { display: block; width: 100%; height: auto; object-fit: cover; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .gallery-item img { display: block; width: 100%; height: auto; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     
-    /* ROTATING HOVER EFFECTS */
+    /* HOVER EFFECTS */
     .gallery-item:nth-child(3n+1):hover { box-shadow: 0 20px 40px rgba(45, 42, 38, 0.15); z-index: 2; }
-    .gallery-item:nth-child(3n+1):hover img, .gallery-item:nth-child(3n+1):hover video { transform: scale(1.08) translateY(-5px); }
-    
+    .gallery-item:nth-child(3n+1):hover img { transform: scale(1.08) translateY(-5px); }
     .gallery-item:nth-child(3n+2):hover { z-index: 2; }
-    .gallery-item:nth-child(3n+2):hover img, .gallery-item:nth-child(3n+2):hover video { transform: scale(1.06) rotate(2deg); filter: brightness(1.08) contrast(1.05); }
-    
+    .gallery-item:nth-child(3n+2):hover img { transform: scale(1.06) rotate(2deg); filter: brightness(1.08) contrast(1.05); }
     .gallery-item:nth-child(3n):hover { z-index: 2; }
-    .gallery-item:nth-child(3n):hover img, .gallery-item:nth-child(3n):hover video { transform: scale(1.1); filter: saturate(1.2) sepia(0.1); }
-
-    /* VIDEO SPECIFIC STYLES */
-    .video-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 5; border: 2px solid rgba(255,255,255,0.8); transition: 0.3s; }
-    .video-badge::after { content: '▶'; color: white; font-size: 1.5rem; margin-left: 5px; }
-    .gallery-item:hover .video-badge { background: rgba(184, 151, 90, 0.9); transform: translate(-50%, -50%) scale(1.1); }
+    .gallery-item:nth-child(3n):hover img { transform: scale(1.1); filter: saturate(1.2) sepia(0.1); }
 
     .premium-badge { position: absolute; top: 1rem; right: 1rem; background: rgba(45, 42, 38, 0.85); backdrop-filter: blur(4px); color: var(--ivory); padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; z-index: 10; transition: 0.3s; }
     .gallery-item:hover .premium-badge { background: var(--gold); color: var(--charcoal); }
     
-    .locked img, .locked video { filter: blur(15px); transform: scale(1.1); }
+    .locked img { filter: blur(15px); transform: scale(1.1); }
     .locked::after { content: '🔒'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; z-index: 6; transition: 0.4s; }
     .locked:hover::after { transform: translate(-50%, -50%) scale(1.2); }
 
     /* PREMIUM VIEW */
     #premium-view { display: none; max-width: 640px; margin: 0 auto; padding: 5rem 1rem; text-align: center; flex: 1; width: 100%; }
     .price-card, .qr-box, .instructions, .password-box { 
-      border: 1px solid rgba(255, 255, 255, 0.6); 
-      background: rgba(255, 255, 255, 0.6); 
-      backdrop-filter: blur(12px); 
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.04);
-      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.6); 
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.04); border-radius: 12px;
     }
     .price-card { padding: 2rem; margin: 2rem 0; }
     .price { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; }
@@ -156,11 +160,9 @@
     .instructions { text-align: left; padding: 2rem; margin-bottom: 2rem; }
     .instructions p { margin-bottom: 0.5rem; color: var(--charcoal-soft); }
     .instructions a.email-link { color: var(--gold); text-decoration: underline; font-weight: 500; }
-    
     .password-box { padding: 2rem; }
     .password-box input { width: 100%; padding: 1rem; border: 1px solid var(--border); margin-bottom: 1rem; border-radius: 8px; font-family: 'Inter', sans-serif; background: rgba(255,255,255,0.8); }
     .password-box input:focus { outline: none; border-color: var(--gold); }
-    
     .btn { padding: 1rem 2rem; background: var(--charcoal); color: var(--ivory); border: none; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 8px; transition: 0.3s; font-weight: 500; }
     .btn:hover { background: var(--gold); color: var(--charcoal); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(184, 151, 90, 0.3); }
     
@@ -171,31 +173,40 @@
     .social-links a:hover { color: var(--gold); transform: translateY(-5px) scale(1.1); }
     .social-links svg { width: 24px; height: 24px; }
 
-    /* FULL-SCREEN SCREENSAVER LIGHTBOX */
-    .lightbox { 
-      display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-      background: rgba(15, 15, 15, 0.95); z-index: 1000; 
-      justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease;
-      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-    }
+    /* SCREENSAVER LIGHTBOX */
+    .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 15, 15, 0.95); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; backdrop-filter: blur(15px); }
     .lightbox.active { display: flex; opacity: 1; }
-    
-    /* Lightbox Content */
     #lightbox-content img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.6); object-fit: contain; animation: kenBurns 15s ease-in-out infinite alternate; }
     #lightbox-content video { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.6); outline: none; }
-
-    @keyframes kenBurns {
-      0% { transform: scale(1) translate(0, 0); }
-      100% { transform: scale(1.08) translate(-2%, 2%); }
-    }
-
+    @keyframes kenBurns { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.08) translate(-2%, 2%); } }
     .close-lightbox { position: absolute; top: 2rem; right: 2rem; color: white; font-size: 3rem; cursor: pointer; z-index: 1001; transition: 0.3s; line-height: 1; }
     .close-lightbox:hover { color: var(--gold); transform: rotate(90deg); }
-    
     .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6); font-size: 3rem; cursor: pointer; padding: 1rem 1.5rem; user-select: none; z-index: 1001; transition: 0.3s; }
     .nav-arrow:hover { color: var(--gold); background: rgba(255,255,255,0.05); border-radius: 50%; }
     .prev-arrow { left: 1rem; }
     .next-arrow { right: 1rem; }
+
+    /* CHAT NOW BUTTON (Blinking) */
+    .chat-btn {
+      position: fixed; bottom: 30px; left: 30px;
+      background: var(--charcoal); color: var(--ivory);
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 24px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 999;
+      animation: pulse-border 2s infinite;
+      transition: 0.3s;
+    }
+    .chat-btn:hover { background: var(--gold); color: var(--charcoal); transform: translateY(-3px); }
+    .chat-dot { width: 10px; height: 10px; background: #4ade80; border-radius: 50%; animation: blink 1.5s infinite; }
+    
+    @keyframes pulse-border {
+      0% { box-shadow: 0 0 0 0 rgba(45, 42, 38, 0.4); }
+      70% { box-shadow: 0 0 0 15px rgba(45, 42, 38, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(45, 42, 38, 0); }
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
   </style>
 </head>
 <body>
@@ -211,6 +222,11 @@
     </div>
   </header>
 
+  <!-- CHAT NOW BUTTON -->
+  <a href="https://m.me/awsmee16" target="_blank" class="chat-btn">
+    <span class="chat-dot"></span> Chat Now
+  </a>
+
   <!-- MAIN GALLERY -->
   <main id="gallery-view">
     <section class="intro container">
@@ -218,6 +234,11 @@
       <h1>A world of quiet beauty</h1>
       <p>A handpicked gallery of photographs and videos — free to explore, with a premium collection for those who want more.</p>
     </section>
+
+    <!-- VIDEOS ROW -->
+    <section class="video-grid container" id="video-grid"></section>
+
+    <!-- PHOTOS MASONRY -->
     <section class="gallery container" id="gallery-grid"></section>
   </main>
 
@@ -269,7 +290,7 @@
     </div>
   </footer>
 
-  <!-- LIGHTBOX SCREENSAVER -->
+  <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
     <span class="close-lightbox" onclick="closeLightbox(event)">&times;</span>
     <span class="nav-arrow prev-arrow" onclick="changeMedia(-1, event)">&#10094;</span>
@@ -279,83 +300,87 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    const gallery = document.getElementById('gallery-grid');
+    const videoGrid = document.getElementById('video-grid');
+    const galleryGrid = document.getElementById('gallery-grid');
     const isUnlocked = localStorage.getItem('premiumUnlocked') === 'true';
-    let mediaData = []; 
-    let currentMediaIndex = 0;
-
-    // 1. BUILD THE GALLERY DATA (Videos First, then Images)
     
-    // Add the 3 Videos
-    const videos = ['asmita.mp4', 'a.mp4', 'b.mp4'];
-    videos.forEach(vid => {
-      mediaData.push({ 
+    let videosData = [];
+    let imagesData = [];
+    let allMediaData = []; // Combined for the lightbox
+
+    // 1. SETUP VIDEOS (Order: a.mp4, asmita.mp4, b.mp4)
+    const videoNames = ['a.mp4', 'asmita.mp4', 'b.mp4'];
+    videoNames.forEach((vid, index) => {
+      const item = {
         type: 'video', 
         src: `images/${vid}`, 
         fallback: `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${vid}`,
-        isPremium: false 
-      });
+        isPremium: false
+      };
+      videosData.push(item);
+      allMediaData.push(item);
     });
 
-    // Add 24 Images (a.jpg to x.jpg)
+    // 2. SETUP IMAGES (a.jpg to x.jpg)
     for (let i = 1; i <= 24; i++) {
       const letter = String.fromCharCode(96 + i); 
-      mediaData.push({ 
+      const item = {
         type: 'image', 
         src: `images/${letter}.jpg`, 
         fallback: `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${letter}.jpg`,
         isPremium: i > 18 // Last 6 images are premium
-      });
+      };
+      imagesData.push(item);
+      allMediaData.push(item);
     }
 
-    // 2. RENDER GALLERY
-    mediaData.forEach((item, index) => {
+    // 3. RENDER VIDEOS (Top Row)
+    videosData.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = 'video-item';
+      div.onclick = () => openLightbox(index);
+      
+      // Video Preview in grid
+      div.innerHTML = `
+        <video src="${item.src}" autoplay muted loop playsinline onerror="this.onerror=null; this.src='${item.fallback}';"></video>
+        <div class="video-badge"></div>
+      `;
+      videoGrid.appendChild(div);
+    });
+
+    // 4. RENDER IMAGES (Masonry Below)
+    imagesData.forEach((item, index) => {
+      // Calculate the actual index in the combined array for the lightbox
+      const globalIndex = videosData.length + index;
+
       const figure = document.createElement('figure');
       figure.className = `gallery-item ${item.isPremium && !isUnlocked ? 'locked' : ''}`;
-      
-      // Staggered animation delay
       figure.style.animationDelay = `${index * 0.05}s`;
       
       if (item.isPremium && !isUnlocked) {
         figure.onclick = () => showView('premium');
       } else {
-        figure.onclick = () => openLightbox(index);
+        figure.onclick = () => openLightbox(globalIndex);
       }
 
-      let html = '';
-      if (item.type === 'video') {
-        // Render video preview in grid (muted, looping)
-        html = `<video src="${item.src}" autoplay muted loop playsinline onerror="this.onerror=null; this.src='${item.fallback}';" style="min-height: 200px; background: #000;"></video>`;
-        if (!item.isPremium || isUnlocked) {
-          html += `<div class="video-badge"></div>`;
-        }
-      } else {
-        // Render image
-        html = `<img src="${item.src}" alt="Gallery image" loading="lazy" onerror="this.onerror=null; this.src='${item.fallback}';" style="min-height: 200px; background: #eee;">`;
-      }
+      let html = `<img src="${item.src}" alt="Gallery image" loading="lazy" onerror="this.onerror=null; this.src='${item.fallback}';" style="min-height: 200px; background: #eee;">`;
       
       if (item.isPremium && !isUnlocked) {
         html += `<div class="premium-badge">✦ Premium</div>`;
       }
 
       figure.innerHTML = html;
-      gallery.appendChild(figure);
+      galleryGrid.appendChild(figure);
     });
 
-    // 3. MOBILE MENU
+    // 5. MENU & VIEWS
     function toggleMenu(forceClose = false) {
       const nav = document.getElementById('main-nav');
       const btn = document.getElementById('hamburger-btn');
-      if (forceClose) { 
-        nav.classList.remove('active'); 
-        btn.classList.remove('active'); 
-      } else { 
-        nav.classList.toggle('active'); 
-        btn.classList.toggle('active'); 
-      }
+      if (forceClose) { nav.classList.remove('active'); btn.classList.remove('active'); } 
+      else { nav.classList.toggle('active'); btn.classList.toggle('active'); }
     }
 
-    // 4. VIEW SWITCHING
     function showView(viewName) {
       document.getElementById('gallery-view').style.display = viewName === 'premium' ? 'none' : 'block';
       document.getElementById('premium-view').style.display = viewName === 'premium' ? 'block' : 'none';
@@ -364,25 +389,24 @@
       window.scrollTo(0, 0);
     }
 
-    // 5. LIGHTBOX SCREENSAVER (Handles Images AND Videos)
+    // 6. LIGHTBOX
+    let currentMediaIndex = 0;
+
     function openLightbox(index) {
-      if (mediaData[index].isPremium && !isUnlocked) return; 
+      if (allMediaData[index].isPremium && !isUnlocked) return; 
       currentMediaIndex = index;
       
       const contentDiv = document.getElementById('lightbox-content');
-      const item = mediaData[index];
+      const item = allMediaData[index];
       
       if (item.type === 'video') {
-        // Inject Video Player with Controls
         contentDiv.innerHTML = `<video src="${item.src}" controls autoplay playsinline style="animation: none;" onerror="this.onerror=null; this.src='${item.fallback}';"></video>`;
       } else {
-        // Inject Image with Ken Burns effect
         contentDiv.innerHTML = `<img src="${item.src}" alt="Fullscreen view" onerror="this.onerror=null; this.src='${item.fallback}';">`;
         
-        // Restart Ken Burns animation
         const imgEl = contentDiv.querySelector('img');
         imgEl.style.animation = 'none';
-        imgEl.offsetHeight; /* trigger reflow */
+        imgEl.offsetHeight; 
         imgEl.style.animation = 'kenBurns 15s ease-in-out infinite alternate';
       }
       
@@ -391,11 +415,9 @@
     }
 
     function closeLightbox(event) {
-      // Prevent closing if clicking the media itself or video controls
       if (event && (event.target.tagName === 'IMG' || event.target.tagName === 'VIDEO')) return;
-      
       document.getElementById('lightbox').classList.remove('active');
-      document.getElementById('lightbox-content').innerHTML = ''; // Stop video playing
+      document.getElementById('lightbox-content').innerHTML = ''; 
       document.body.style.overflow = 'auto';
     }
 
@@ -403,13 +425,12 @@
       if(event) event.stopPropagation();
       let newIndex = currentMediaIndex + direction;
       
-      // Wrap around the gallery
-      if (newIndex < 0) newIndex = mediaData.length - 1;
-      if (newIndex >= mediaData.length) newIndex = 0;
+      if (newIndex < 0) newIndex = allMediaData.length - 1;
+      if (newIndex >= allMediaData.length) newIndex = 0;
       
       // Skip premium items if locked
-      if (mediaData[newIndex].isPremium && !isUnlocked) {
-        newIndex = direction > 0 ? 0 : 17; 
+      if (allMediaData[newIndex].isPremium && !isUnlocked) {
+        newIndex = direction > 0 ? 0 : videosData.length + 17; 
       }
       
       openLightbox(newIndex);
@@ -423,7 +444,7 @@
       }
     });
 
-    // 6. UNLOCK PREMIUM
+    // 7. UNLOCK
     function unlockPremium() {
       if (document.getElementById('passcode').value === "asmee2026") {
         localStorage.setItem('premiumUnlocked', 'true');
