@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asmee</title>
   
-  <!-- YOUR FAVICON (from the images folder) -->
+  <!-- YOUR FAVICON -->
   <link rel="icon" type="image/png" href="images/favicon.png">
   
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -115,7 +115,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .gallery-item img, .gallery-item video { display: block; width: 100%; height: auto; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .gallery-item img, .gallery-item video { display: block; width: 100%; height: auto; object-fit: cover; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     
     /* ROTATING HOVER EFFECTS */
     .gallery-item:nth-child(3n+1):hover { box-shadow: 0 20px 40px rgba(45, 42, 38, 0.15); z-index: 2; }
@@ -180,7 +180,7 @@
     }
     .lightbox.active { display: flex; opacity: 1; }
     
-    /* Lightbox Content (Handles both Image and Video) */
+    /* Lightbox Content */
     #lightbox-content img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.6); object-fit: contain; animation: kenBurns 15s ease-in-out infinite alternate; }
     #lightbox-content video { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.6); outline: none; }
 
@@ -284,13 +284,17 @@
     let mediaData = []; 
     let currentMediaIndex = 0;
 
-    // 1. BUILD THE GALLERY DATA (Video First, then Images)
-    // Add Video (Asmita.mp4)
-    mediaData.push({ 
-      type: 'video', 
-      src: 'images/asmita.mp4', 
-      fallback: 'https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/asmita.mp4',
-      isPremium: false 
+    // 1. BUILD THE GALLERY DATA (Videos First, then Images)
+    
+    // Add the 3 Videos
+    const videos = ['asmita.mp4', 'a.mp4', 'b.mp4'];
+    videos.forEach(vid => {
+      mediaData.push({ 
+        type: 'video', 
+        src: `images/${vid}`, 
+        fallback: `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${vid}`,
+        isPremium: false 
+      });
     });
 
     // Add 24 Images (a.jpg to x.jpg)
@@ -300,7 +304,7 @@
         type: 'image', 
         src: `images/${letter}.jpg`, 
         fallback: `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${letter}.jpg`,
-        isPremium: i > 18 // Last 6 are premium
+        isPremium: i > 18 // Last 6 images are premium
       });
     }
 
@@ -360,7 +364,7 @@
       window.scrollTo(0, 0);
     }
 
-    // 5. LIGHTBOX SCREENSAVER (Handles Images AND Video)
+    // 5. LIGHTBOX SCREENSAVER (Handles Images AND Videos)
     function openLightbox(index) {
       if (mediaData[index].isPremium && !isUnlocked) return; 
       currentMediaIndex = index;
@@ -372,7 +376,7 @@
         // Inject Video Player with Controls
         contentDiv.innerHTML = `<video src="${item.src}" controls autoplay playsinline style="animation: none;" onerror="this.onerror=null; this.src='${item.fallback}';"></video>`;
       } else {
-        // Inject Image with Ken Burns
+        // Inject Image with Ken Burns effect
         contentDiv.innerHTML = `<img src="${item.src}" alt="Fullscreen view" onerror="this.onerror=null; this.src='${item.fallback}';">`;
         
         // Restart Ken Burns animation
@@ -405,7 +409,7 @@
       
       // Skip premium items if locked
       if (mediaData[newIndex].isPremium && !isUnlocked) {
-        newIndex = direction > 0 ? 0 : 17; // Loop back to start or end of free items
+        newIndex = direction > 0 ? 0 : 17; 
       }
       
       openLightbox(newIndex);
