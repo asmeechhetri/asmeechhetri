@@ -4,17 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asmee</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  
+  <!-- YOUR FAVICON (from the images folder) -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
-    :root { --ivory: #FDF8F3; --charcoal: #2D2A26; --gold: #B8975A; --cream: #F5EDE4; --border: #E8DDD2; }
+    :root { 
+      --ivory: #FDF8F3; 
+      --charcoal: #2D2A26; 
+      --charcoal-soft: #4A4540;
+      --gold: #B8975A; 
+      --cream: #F5EDE4; 
+      --border: #E8DDD2; 
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--charcoal); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--ivory); color: var(--charcoal); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
     h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
-    a { color: var(--charcoal); text-decoration: none; cursor: pointer; }
+    a { color: var(--charcoal); text-decoration: none; cursor: pointer; transition: 0.2s; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%; }
     
     /* HEADER */
@@ -22,7 +32,7 @@
     .header-inner { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; max-width: 1200px; margin: 0 auto; }
     .brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; }
     nav { display: flex; gap: 2rem; }
-    nav a { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: #4A4540; }
+    nav a { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--charcoal-soft); }
     nav a:hover, nav a.active { color: var(--charcoal); border-bottom: 1px solid var(--gold); }
     
     /* HAMBURGER */
@@ -56,24 +66,34 @@
 
     /* PREMIUM */
     #premium-view { display: none; max-width: 640px; margin: 0 auto; padding: 5rem 1rem; text-align: center; flex: 1; width: 100%; }
-    .price-card { border: 1px solid var(--border); padding: 2rem; margin: 2rem 0; background: white; }
+    .price-card { border: 1px solid var(--border); padding: 2rem; margin: 2rem 0; background: white; border-radius: 4px; }
     .price { font-size: 3.5rem; font-family: 'Cormorant Garamond', serif; }
-    .qr-box { border: 2px dashed var(--border); padding: 2rem; margin-bottom: 2rem; background: white; }
+    .qr-box { border: 2px dashed var(--border); padding: 2rem; margin-bottom: 2rem; background: white; border-radius: 4px; }
     .qr-box img { max-width: 200px; margin: 0 auto; display: block; }
-    .instructions { text-align: left; background: var(--cream); padding: 2rem; margin-bottom: 2rem; }
-    .instructions p { margin-bottom: 0.5rem; color: #4A4540; }
-    .password-box { background: white; border: 1px solid var(--border); padding: 2rem; }
-    .password-box input { width: 100%; padding: 1rem; border: 1px solid var(--border); margin-bottom: 1rem; }
-    .btn { padding: 1rem 2rem; background: var(--charcoal); color: var(--ivory); border: none; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; }
+    .instructions { text-align: left; background: var(--cream); padding: 2rem; margin-bottom: 2rem; border-radius: 4px; border: 1px solid var(--border); }
+    .instructions p { margin-bottom: 0.5rem; color: var(--charcoal-soft); }
+    .instructions a.email-link { color: var(--gold); text-decoration: underline; font-weight: 500; }
+    .password-box { background: white; border: 1px solid var(--border); padding: 2rem; border-radius: 4px; }
+    .password-box input { width: 100%; padding: 1rem; border: 1px solid var(--border); margin-bottom: 1rem; border-radius: 4px; font-family: 'Inter', sans-serif; }
+    .password-box input:focus { outline: none; border-color: var(--gold); }
+    .btn { padding: 1rem 2rem; background: var(--charcoal); color: var(--ivory); border: none; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 4px; transition: 0.3s; }
+    .btn:hover { background: var(--gold); color: var(--charcoal); }
     
+    /* FOOTER & SOCIAL LINKS */
     footer { border-top: 1px solid var(--border); padding: 3rem 0; text-align: center; background: var(--cream); margin-top: auto; }
+    .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; }
+    .social-links a { color: var(--charcoal); transition: color 0.2s, transform 0.2s; display: inline-block; }
+    .social-links a:hover { color: var(--gold); transform: translateY(-3px); }
+    .social-links svg { width: 24px; height: 24px; }
 
     /* LIGHTBOX */
     .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 15, 15, 0.95); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; backdrop-filter: blur(10px); }
     .lightbox.active { display: flex; opacity: 1; }
     .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 8px; object-fit: contain; }
-    .close-lightbox { position: absolute; top: 2rem; right: 2rem; color: white; font-size: 3rem; cursor: pointer; z-index: 1001; }
-    .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 3rem; cursor: pointer; padding: 1rem; user-select: none; z-index: 1001; }
+    .close-lightbox { position: absolute; top: 2rem; right: 2rem; color: white; font-size: 3rem; cursor: pointer; z-index: 1001; transition: 0.2s; }
+    .close-lightbox:hover { color: var(--gold); }
+    .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 3rem; cursor: pointer; padding: 1rem; user-select: none; z-index: 1001; transition: 0.2s; }
+    .nav-arrow:hover { color: var(--gold); background: rgba(255,255,255,0.05); border-radius: 50%; }
     .prev-arrow { left: 2rem; }
     .next-arrow { right: 2rem; }
   </style>
@@ -91,6 +111,7 @@
     </div>
   </header>
 
+  <!-- MAIN GALLERY -->
   <main id="gallery-view">
     <section class="intro container">
       <p class="eyebrow">Curated Collection</p>
@@ -100,21 +121,29 @@
     <section class="gallery container" id="gallery-grid"></section>
   </main>
 
+  <!-- PREMIUM PAGE -->
   <main id="premium-view">
     <p class="eyebrow">Premium Access</p>
     <h1>Unlock the full collection</h1>
     <p>Get access to high-resolution photos and exclusive videos.</p>
-    <div class="price-card"><p class="price">Rs 2999</p><p style="font-size: 0.9rem;">One-time payment · Lifetime access</p></div>
+    
+    <div class="price-card">
+      <p class="price">Rs 2999</p>
+      <p style="font-size: 0.9rem; color: var(--charcoal-soft);">One-time payment · Lifetime access</p>
+    </div>
+    
     <div class="qr-box">
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PayBridgeNP_Payment" alt="QR Code">
       <p style="margin-top: 1rem; font-size: 0.85rem;">Scan with eSewa, Khalti, or Fonepay</p>
     </div>
+    
     <div class="instructions">
       <h3 style="margin-bottom: 1rem;">How to unlock:</h3>
       <p><strong>1.</strong> Scan the QR code above and pay Rs 2999.</p>
-      <p><strong>2.</strong> Send your transaction ID to <strong>your-email@example.com</strong>.</p>
+      <p><strong>2.</strong> Send your transaction ID to <a href="mailto:asmeechhetri16@gmail.com" class="email-link">asmeechhetri16@gmail.com</a>.</p>
       <p><strong>3.</strong> You will receive a secret password.</p>
     </div>
+    
     <div class="password-box">
       <h3 style="margin-bottom: 1rem;">Enter your password</h3>
       <input type="password" id="passcode" placeholder="Enter password here...">
@@ -123,8 +152,27 @@
     </div>
   </main>
 
-  <footer><p>&copy; 2026 Asmee. All rights reserved.</p></footer>
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Asmee. All rights reserved.</p>
+    
+    <div class="social-links">
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/asmeechhetri16/" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      </a>
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/awsmee16/" target="_blank" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+      </a>
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@awsmee16" target="_blank" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"></path></svg>
+      </a>
+    </div>
+  </footer>
 
+  <!-- LIGHTBOX OVERLAY -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
     <span class="close-lightbox" onclick="closeLightbox(event)">&times;</span>
     <span class="nav-arrow prev-arrow" onclick="changeImage(-1, event)">&#10094;</span>
@@ -132,6 +180,7 @@
     <span class="nav-arrow next-arrow" onclick="changeImage(1, event)">&#10095;</span>
   </div>
 
+  <!-- JAVASCRIPT LOGIC -->
   <script>
     const totalImages = 24;
     const gallery = document.getElementById('gallery-grid');
@@ -139,16 +188,16 @@
     let imageData = []; 
     let currentImageIndex = 0;
 
+    // 1. GENERATE IMAGES (a.jpg to x.jpg)
     for (let i = 1; i <= totalImages; i++) {
-      // 1. Convert 1 to 'a', 2 to 'b', up to 24 to 'x'
+      // Convert 1 to 'a', 2 to 'b', etc.
       const letter = String.fromCharCode(96 + i); 
       
-      // 2. Primary path: relative to the images folder
       const imgSrc = `images/${letter}.jpg`; 
-      
-      // 3. Fallback path: absolute raw GitHub URL (guarantees it loads)
+      // Fallback in case GitHub Pages fails
       const fallbackSrc = `https://raw.githubusercontent.com/asmeechhetri/asmee/main/images/${letter}.jpg`;
       
+      // Lock the last 6 images (19 to 24)
       const isPremium = i > 18; 
 
       imageData.push({ src: imgSrc, isPremium: isPremium });
@@ -162,7 +211,6 @@
         figure.onclick = () => openLightbox(i - 1);
       }
 
-      // If the first path fails, the onerror instantly swaps to the raw GitHub URL
       let html = `<img src="${imgSrc}" alt="Gallery image ${letter}" loading="lazy" onerror="this.onerror=null; this.src='${fallbackSrc}';" style="min-height: 200px; background: #eee;">`;
       
       if (isPremium && !isUnlocked) {
@@ -173,13 +221,20 @@
       gallery.appendChild(figure);
     }
 
+    // 2. MOBILE HAMBURGER MENU
     function toggleMenu(forceClose = false) {
       const nav = document.getElementById('main-nav');
       const btn = document.getElementById('hamburger-btn');
-      if (forceClose) { nav.classList.remove('active'); btn.classList.remove('active'); } 
-      else { nav.classList.toggle('active'); btn.classList.toggle('active'); }
+      if (forceClose) { 
+        nav.classList.remove('active'); 
+        btn.classList.remove('active'); 
+      } else { 
+        nav.classList.toggle('active'); 
+        btn.classList.toggle('active'); 
+      }
     }
 
+    // 3. SWITCH BETWEEN VIEWS
     function showView(viewName) {
       document.getElementById('gallery-view').style.display = viewName === 'premium' ? 'none' : 'block';
       document.getElementById('premium-view').style.display = viewName === 'premium' ? 'block' : 'none';
@@ -188,6 +243,7 @@
       window.scrollTo(0, 0);
     }
 
+    // 4. LIGHTBOX (SCREENSAVER)
     function openLightbox(index) {
       if (imageData[index].isPremium && !isUnlocked) return; 
       currentImageIndex = index;
@@ -207,6 +263,7 @@
       let newIndex = currentImageIndex + direction;
       if (newIndex < 0) newIndex = imageData.length - 1;
       if (newIndex >= imageData.length) newIndex = 0;
+      
       if (imageData[newIndex].isPremium && !isUnlocked) {
         newIndex = direction > 0 ? 0 : 17; 
       }
@@ -222,6 +279,7 @@
       }
     });
 
+    // 5. UNLOCK PREMIUM
     function unlockPremium() {
       if (document.getElementById('passcode').value === "asmee2026") {
         localStorage.setItem('premiumUnlocked', 'true');
